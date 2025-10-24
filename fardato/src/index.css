@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+* {
+  user-select: none;
+  scroll-behavior: smooth;
+  direction: rtl;
+  margin: 0rem;
+}
+body {
+  min-height: 100vh;
+  width: 100%;
+}
