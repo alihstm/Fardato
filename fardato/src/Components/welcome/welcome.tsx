@@ -17,8 +17,6 @@ export default (): any => {
       if (prev >= 3) return 3;
       return prev + 1;
     });
-
-    // Reset after animation would complete (500ms matches your CSS transitions)
     setTimeout(() => setIsTransitioning(false), 500);
   };
 

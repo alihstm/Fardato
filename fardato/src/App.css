@@ -3,15 +3,45 @@
   --alexandria-font: Alexandria;
   --teal: #a8d8ea;
   --light-green: #6acb85;
+  --green: #00ae31;
+  --red: #fb2c36;
+  --gray: #d1d5dc;
+  --gray2: #6a7282;
+  --gray3: #f6f3e6;
 }
 .vazir-font {
   font-family: var(--vazir-font);
 }
+.alexandria-font {
+  font-family: var(--alexandria-font);
+}
+
 .text-light-green {
   color: var(--light-green);
 }
+.text-green {
+  color: var(--green);
+}
+.text-red {
+  color: var(--red);
+}
+.text-gray {
+  color: var(--gray2);
+}
+
 .bg-light-green {
   background-color: var(--light-green);
+}
+.bg-gray {
+  background-color: var(--gray3);
+}
+
+.border-gray {
+  border: 0.1rem solid var(--gray);
+}
+
+.margin-right {
+  margin-right: 0.5rem;
 }
 
 @keyframes fadeIn {
