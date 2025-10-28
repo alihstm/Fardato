@@ -1,64 +1,20 @@
 import { useState } from "react";
-import type { IconType } from "react-icons";
 import logo from "../../assets/material/logo.png";
-import { FaRegUser } from "react-icons/fa";
-import { MdAlternateEmail } from "react-icons/md";
-import { FaRegCircleUser } from "react-icons/fa6";
-import { MdPassword } from "react-icons/md";
+import { useAuthForm } from "../auth/authForm";
 
 export default (): any => {
   const [loginStatus, setLoginStatus] = useState(true);
-  interface inputField {
-    id: number;
-    type: string;
-    label: string;
-    placeholder: string;
-    icon: IconType;
-    errorMsg?: string;
-  }
 
-  const loginInputs: inputField[] = [
-    {
-      id: 1,
-      type: "text",
-      label: "به چه اسمی صدات میکردم؟",
-      placeholder: "ali_shabani1384",
-      icon: MdAlternateEmail,
-    },
-    {
-      id: 2,
-      type: "password",
-      label: "رمزت چی بود؟",
-      placeholder: "alishbni1384",
-      icon: MdPassword,
-    },
-  ];
-
-  const registerInputs: inputField[] = [
-    {
-      id: 1,
-      type: "text",
-      label: "اسمت چیه؟",
-      placeholder: "علی شعبانی",
-      icon: FaRegUser,
-    },
-    {
-      id: 2,
-      type: "text",
-      label: "میخوای چی صدات کنم؟",
-      placeholder: "ali_shabani1384",
-      icon: FaRegCircleUser,
-    },
-    {
-      id: 3,
-      type: "password",
-      label: "یه رمز باحال بذار",
-      placeholder: "alishbni1384",
-      icon: MdPassword,
-    },
-  ];
-
-  let inputs = !loginStatus ? loginInputs : registerInputs;
+  const {
+    inputs,
+    formData,
+    errors,
+    touched,
+    handleInputChange,
+    handleBlur,
+    handleSubmit,
+    isFormFilled,
+  } = useAuthForm(loginStatus);
 
   return (
     <main className="flex flex-col items-center justify-between w-full min-h-screen sm:px-[10rem] px-[1.5rem] sm:pt-[1rem] pt-[1rem] sm:pb-[1rem] pb-[2rem] overflow-hidden bg-[#F6F3E6]">
@@ -95,16 +51,31 @@ export default (): any => {
                 <input
                   type={input.type}
                   placeholder={input.placeholder}
+                  value={formData[input.id] || ""}
+                  onChange={(e) => handleInputChange(input.id, e.target.value)}
+                  onBlur={() => handleBlur(input.id)}
                   className="w-full vazir-font py-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-400 transition-all duration-200 placeholder-gray-400 text-right"
                 />
               </div>
+
+              {touched[input.id] && errors[input.id] && (
+                <span className="text-red-500 text-xs vazir-font">
+                  {errors[input.id]}
+                </span>
+              )}
             </div>
           );
         })}
       </div>
 
       <div className="flex flex-col items-center sm:w-[30%] w-full gap-3">
-        <button className="text-light-green font-semibold border-1 rounded-xl hover:text-[#6acb85] hover:bg-black hover:cursor-pointer active:scale-90 transition duration-150 w-full sm:px-0 px-30 sm:py-3 py-2 sm:text-lg text-md animate-fade-in-delayed-2 vazir-font">
+        <button
+          onClick={handleSubmit}
+          disabled={!isFormFilled}
+          className={`text-light-green font-semibold border-1 rounded-xl hover:text-[#6acb85] hover:bg-black hover:cursor-pointer active:scale-90 transition duration-150 w-full sm:px-0 px-30 sm:py-3 py-2 sm:text-lg text-md animate-fade-in-delayed-2 vazir-font ${
+            !isFormFilled ? "cursor-not-allowed" : ""
+          }`}
+        >
           {loginStatus ? "ثبت نام" : "ورود"}
         </button>
 
@@ -128,6 +99,7 @@ export default (): any => {
           </a>
         </div>
       </div>
+
       <p className="text-sm vazir-font">
         تمامی حقوق برای <span className="font-bold text-green">فرداتو</span>{" "}
         محفوظ است
